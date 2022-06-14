@@ -66,6 +66,11 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "@main/(.*)$": "<rootDir>/$1",
+      "@shared/(.*)$": "<rootDir>/shared/$1",
+      "@products/(.*)$": "<rootDir>/products/$1"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {

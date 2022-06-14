@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProductModule } from './products/product.module';
-import { envVariables, envVariablesValidations } from './shared/config';
+
+import { AppController } from '@main/app.controller';
+import { AppService } from '@main/app.service';
+import { ProductModule } from '@products/product.module';
+import { envVariables, envVariablesValidations } from '@shared/config';
 
 @Module({
   imports: [
