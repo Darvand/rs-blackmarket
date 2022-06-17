@@ -1,8 +1,8 @@
-import { ProductDTO } from '@main/products/dtos/product.dto';
-import { createFakeProductDTOArray } from '@products/tests/fakes/products.fake';
+import { ProductEntity } from '@main/products/entities/product.entity';
+import { createFakeProductEntityArray } from '@products/tests/fakes/products.fake';
 
 export const mockProductsService = {
-  getAll: jest.fn().mockImplementation(async (): Promise<ProductDTO[]> => {
-    return createFakeProductDTOArray();
+  getAll: jest.fn().mockImplementation(async (): Promise<ProductEntity[]> => {
+    return createFakeProductEntityArray();
   }),
 };

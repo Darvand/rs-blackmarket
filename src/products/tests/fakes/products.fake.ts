@@ -1,33 +1,14 @@
-import { datatype, internet, name, random } from 'faker';
+import { faker } from '@faker-js/faker';
 
-import { ProductDTO } from '@main/products/dtos/product.dto';
 import { ProductEntity } from '@main/products/entities/product.entity';
-
-export const createFakeProductDTO = (): ProductDTO => {
-  return new ProductDTO(
-    name.title(),
-    random.words(10),
-    datatype.number(1000000),
-    datatype.number(100),
-    internet.url(),
-  );
-};
-
-export const createFakeProductDTOArray = (size = 5): ProductDTO[] => {
-  const products: ProductDTO[] = [];
-  for (let index = 0; index < size; index++) {
-    products.push(createFakeProductDTO());
-  }
-  return products;
-};
 
 export const createFakeProductEntity = (): ProductEntity => {
   return new ProductEntity(
-    name.title(),
-    random.words(10),
-    datatype.number(1000000),
-    datatype.number(100),
-    internet.url(),
+    faker.name.firstName(),
+    faker.random.words(10),
+    faker.datatype.number(1000000),
+    faker.datatype.number(100),
+    faker.internet.url(),
   );
 };
 
