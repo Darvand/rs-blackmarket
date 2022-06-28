@@ -1,31 +1,27 @@
-import { Repository } from 'typeorm';
 import { Test } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { ProductEntity } from '@main/products/entities/product.entity';
-import { GetAllProductsException } from '@main/products/exceptions/get-all-products.exception';
-import { ProductsService } from '@main/products/services/products.service';
+import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
+import { ProductsService } from '@products/services/products.service';
 import { InternalServerErrorException } from '@nestjs/common';
 import { mockProductsRepository } from '@products/tests/mocks/products.repository.mock';
+import { ProductsRepository } from '@products/repositories/products.repository';
 
 describe('ProductsService Unit Test', () => {
   let productsService: ProductsService;
-  let productsRepository: Repository<ProductEntity>;
+  let productsRepository: ProductsRepository;
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
       providers: [
         ProductsService,
         {
-          provide: getRepositoryToken(ProductEntity),
+          provide: ProductsRepository,
           useValue: mockProductsRepository,
         },
       ],
     }).compile();
     productsService = module.get<ProductsService>(ProductsService);
-    productsRepository = module.get<Repository<ProductEntity>>(
-      getRepositoryToken(ProductEntity),
-    );
+    productsRepository = module.get<ProductsRepository>(ProductsRepository);
   });
 
   it('should be defined', () => {
@@ -48,22 +44,22 @@ describe('ProductsService Unit Test', () => {
         expect(product.image).toBeDefined();
       });
 
-      expect(productsRepository.find).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalledWith();
     });
 
     it('should return empty array if no products were found', async () => {
-      jest.spyOn(productsRepository, 'find').mockResolvedValueOnce([]);
+      jest.spyOn(productsRepository, 'findAll').mockResolvedValueOnce([]);
 
       const response = await productsService.getAll();
 
       expect(response).toBeDefined();
       expect(response.length).toBe(0);
 
-      expect(productsRepository.find).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalledWith();
     });
 
     it('should throw a GetAllProductsException if repository fails', async () => {
-      jest.spyOn(productsRepository, 'find').mockImplementationOnce(() => {
+      jest.spyOn(productsRepository, 'findAll').mockImplementationOnce(() => {
         throw new InternalServerErrorException();
       });
 
@@ -71,7 +67,7 @@ describe('ProductsService Unit Test', () => {
         GetAllProductsException,
       );
 
-      expect(productsRepository.find).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalledWith();
     });
   });
 });
