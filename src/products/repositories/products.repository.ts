@@ -14,13 +14,13 @@ export class ProductsRepository extends Repository<Product> {
     this.logger.log(
       `Attempting to find and count using query: ${inspect(query)}`,
     );
-    const take = query.limit;
-    const page = query.page;
-    const skip = (page - 1) * take;
-    const [data, count] = await this.findAndCount({
-      take,
-      skip,
-    });
-    return PaginationUtils.createPagination(data, count, page, take);
+    const findOptions = PaginationUtils.createFindOptions(query);
+    const [data, count] = await this.findAndCount(findOptions);
+    return PaginationUtils.createPagination(
+      data,
+      count,
+      query.page,
+      findOptions.take,
+    );
   }
 }
