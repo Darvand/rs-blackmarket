@@ -3,7 +3,7 @@ import { Column, Entity } from 'typeorm';
 import { Base } from '@shared/entities/base.entity';
 
 @Entity('products')
-export class ProductEntity extends Base {
+export class Product extends Base {
   @Column({ type: 'varchar', unique: true, nullable: false })
   readonly name: string;
 
@@ -20,11 +20,11 @@ export class ProductEntity extends Base {
   readonly image: string;
 
   constructor(
-    name: ProductEntity['name'],
-    description: ProductEntity['description'],
-    price: ProductEntity['price'],
-    stock: ProductEntity['stock'],
-    image: ProductEntity['image'],
+    name: Product['name'],
+    description: Product['description'],
+    price: Product['price'],
+    stock: Product['stock'],
+    image: Product['image'],
   ) {
     super();
     this.name = name;
