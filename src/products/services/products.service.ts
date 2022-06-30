@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { ProductEntity } from '@products/entities/product.entity';
+import { Product } from '@products/entities/product.entity';
 import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
 import { ProductsRepository } from '@products/repositories/products.repository';
 
@@ -14,7 +14,7 @@ export class ProductsService {
     private readonly productRepository: ProductsRepository,
   ) {}
 
-  async getAll(): Promise<ProductEntity[]> {
+  async getAll(): Promise<Product[]> {
     try {
       this.logger.log(`Attempting to find all products`);
       const products = await this.productRepository.findAll();

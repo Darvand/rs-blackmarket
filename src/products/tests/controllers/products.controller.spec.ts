@@ -37,7 +37,7 @@ describe('ProductsController Unit Tests', () => {
         expect(product.image).toBeDefined();
       });
 
-      expect(productService.getAll).toHaveBeenCalledWith();
+      expect(productService.getAll).toHaveBeenCalled();
     });
 
     it('should return empty array if no product were found', async () => {
@@ -48,7 +48,7 @@ describe('ProductsController Unit Tests', () => {
       expect(response).toBeDefined();
       expect(response.length).toBe(0);
 
-      expect(productService.getAll).toHaveBeenCalledWith();
+      expect(productService.getAll).toHaveBeenCalled();
     });
 
     it('should throw a GetAllProductsException if service fails', async () => {
@@ -60,7 +60,7 @@ describe('ProductsController Unit Tests', () => {
         GetAllProductsException,
       );
 
-      expect(productService.getAll).toHaveBeenCalledWith();
+      expect(productService.getAll).toHaveBeenCalled();
     });
   });
 });

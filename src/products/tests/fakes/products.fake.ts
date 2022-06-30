@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 
-import { ProductEntity } from '@main/products/entities/product.entity';
+import { Product } from '@main/products/entities/product.entity';
 
-export const createFakeProductEntity = (): ProductEntity => {
-  return new ProductEntity(
+export const createFakeProductEntity = (): Product => {
+  return new Product(
     faker.name.firstName(),
     faker.random.words(10),
     faker.datatype.number(1000000),
@@ -12,8 +12,8 @@ export const createFakeProductEntity = (): ProductEntity => {
   );
 };
 
-export const createFakeProductEntityArray = (size = 5): ProductEntity[] => {
-  const products: ProductEntity[] = [];
+export const createFakeProductEntityArray = (size = 5): Product[] => {
+  const products: Product[] = [];
   for (let index = 0; index < size; index++) {
     products.push(createFakeProductEntity());
   }

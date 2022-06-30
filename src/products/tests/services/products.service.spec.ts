@@ -44,7 +44,7 @@ describe('ProductsService Unit Test', () => {
         expect(product.image).toBeDefined();
       });
 
-      expect(productsRepository.findAll).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalled();
     });
 
     it('should return empty array if no products were found', async () => {
@@ -55,7 +55,7 @@ describe('ProductsService Unit Test', () => {
       expect(response).toBeDefined();
       expect(response.length).toBe(0);
 
-      expect(productsRepository.findAll).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalled();
     });
 
     it('should throw a GetAllProductsException if repository fails', async () => {
@@ -67,7 +67,7 @@ describe('ProductsService Unit Test', () => {
         GetAllProductsException,
       );
 
-      expect(productsRepository.findAll).toHaveBeenCalledWith();
+      expect(productsRepository.findAll).toHaveBeenCalled();
     });
   });
 });

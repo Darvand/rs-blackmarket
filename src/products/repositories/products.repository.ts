@@ -1,9 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { ProductEntity } from '@products/entities/product.entity';
+import { Product } from '@products/entities/product.entity';
 
-@EntityRepository(ProductEntity)
-export class ProductsRepository extends Repository<ProductEntity> {
-  findAll(): Promise<ProductEntity[]> {
+@EntityRepository(Product)
+export class ProductsRepository extends Repository<Product> {
+  findAll(): Promise<Product[]> {
     return this.find();
   }
 }
