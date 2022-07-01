@@ -1,6 +1,7 @@
 import { Column, Entity } from 'typeorm';
 
 import { Base } from '@shared/entities/base.entity';
+import { IProductProps } from '@products/interfaces/product.interface';
 
 @Entity('products')
 export class Product extends Base {
@@ -19,13 +20,8 @@ export class Product extends Base {
   @Column({ type: 'varchar', nullable: true })
   readonly image: string;
 
-  constructor(
-    name: Product['name'],
-    description: Product['description'],
-    price: Product['price'],
-    stock: Product['stock'],
-    image: Product['image'],
-  ) {
+  constructor(productProps: IProductProps) {
+    const { name, description, price, stock, image } = productProps;
     super();
     this.name = name;
     this.description = description;
