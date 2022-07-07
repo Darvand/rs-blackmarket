@@ -24,6 +24,7 @@ import { envVariables, envVariablesValidations } from '@shared/config';
           type: 'postgres',
           synchronize: false,
           entities: ['dist/**/*{.entity.ts,.entity.js}'],
+          entitySkipConstructor: true,
           host,
           port,
           username,
