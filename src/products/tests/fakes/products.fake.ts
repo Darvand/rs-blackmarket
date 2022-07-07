@@ -1,15 +1,17 @@
 import { faker } from '@faker-js/faker';
 
-import { Product } from '@main/products/entities/product.entity';
+import { Product } from '@products/entities/product.entity';
+import { IProductProps } from '@products/interfaces/product.interface';
 
 export const createFakeProductEntity = (): Product => {
-  return new Product(
-    faker.name.firstName(),
-    faker.random.words(10),
-    faker.datatype.number(1000000),
-    faker.datatype.number(100),
-    faker.internet.url(),
-  );
+  const productProps: IProductProps = {
+    name: faker.name.firstName(),
+    description: faker.random.words(10),
+    price: faker.datatype.number(1000000),
+    stock: faker.datatype.number(100),
+    image: faker.internet.url(),
+  };
+  return new Product(productProps);
 };
 
 export const createFakeProductEntityArray = (size = 5): Product[] => {
