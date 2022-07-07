@@ -15,12 +15,12 @@ export class PaginationUtils {
     totalAmount: number,
     actualPage: number,
     limit: number,
-  ): Pagination<T[]> {
-    return {
+  ): Pagination<T> {
+    return new Pagination<T>({
       results,
       totalAmount,
       actualPage,
       totalPages: Math.ceil(totalAmount / limit),
-    };
+    });
   }
 }

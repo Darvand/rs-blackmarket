@@ -12,7 +12,7 @@ export const createFakePaginationQueryDTO = (
 };
 
 export const createFakePagination = <T>(
-  results: T,
+  results: T[],
   query?: PaginationQueryDTO,
   totalPages = 1,
 ): Pagination<T> => {
