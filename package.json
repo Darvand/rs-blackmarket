@@ -89,7 +89,10 @@
       "!shared/config.ts",
       "!database/migrations/**.ts",
       "!**/**.e2e-spec.ts",
-      "!**/tests/utils/**"
+      "!**/tests/utils/**",
+      "!**/**.repository.ts",
+      "!**/**.dto.ts",
+      "!**/**.entity.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
