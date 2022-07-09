@@ -1,8 +1,9 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Base } from '@shared/entities/base.entity';
 import { IProductProps } from '@products/interfaces/product.interface';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Category } from '@products/entities/category.entity';
 
 @Entity('products')
 export class Product extends Base {
@@ -46,13 +47,19 @@ export class Product extends Base {
   @Column({ type: 'varchar', nullable: true })
   readonly image: string;
 
+  @ManyToOne(() => Category, (category) => category.products)
+  readonly category: Category;
+
   constructor(productProps: IProductProps) {
-    const { name, description, price, stock, image } = productProps;
     super();
-    this.name = name;
-    this.description = description;
-    this.price = price;
-    this.stock = stock;
-    this.image = image;
+    if (productProps) {
+      const { name, description, price, stock, image, category } = productProps;
+      this.name = name;
+      this.description = description;
+      this.price = price;
+      this.stock = stock;
+      this.image = image;
+      this.category = category;
+    }
   }
 }

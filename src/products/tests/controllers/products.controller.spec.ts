@@ -1,11 +1,12 @@
-import { ProductsController } from '@main/products/controllers/products.controller';
-import { GetAllProductsException } from '@main/products/exceptions/get-all-products.exception';
-import { ProductsService } from '@main/products/services/products.service';
+import { Test } from '@nestjs/testing';
+
+import { ProductsController } from '@products/controllers/products.controller';
+import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
+import { ProductsService } from '@products/services/products.service';
 import {
   createFakePagination,
-  createFakePaginationQueryDTO,
-} from '@main/shared/tests/fakes/pagination.fake';
-import { Test } from '@nestjs/testing';
+  createFakeProductQueryDTO,
+} from '@shared/tests/fakes/pagination.fake';
 import { mockProductsService } from '@products/tests/mocks/products.service.mock';
 
 describe('ProductsController Unit Tests', () => {
@@ -28,7 +29,7 @@ describe('ProductsController Unit Tests', () => {
 
   describe('getAll', () => {
     it('should return five products', async () => {
-      const fakeQuery = createFakePaginationQueryDTO(5);
+      const fakeQuery = createFakeProductQueryDTO(5);
       const response = await productsController.getAll(fakeQuery);
 
       expect(response).toBeDefined();
@@ -49,7 +50,7 @@ describe('ProductsController Unit Tests', () => {
     });
 
     it('should return empty array if no product were found', async () => {
-      const fakeQuery = createFakePaginationQueryDTO();
+      const fakeQuery = createFakeProductQueryDTO();
       const fakePagination = createFakePagination([], fakeQuery);
       jest
         .spyOn(productService, 'getAll')
@@ -67,7 +68,7 @@ describe('ProductsController Unit Tests', () => {
     });
 
     it('should throw a GetAllProductsException if service fails', async () => {
-      const fakeQuery = createFakePaginationQueryDTO();
+      const fakeQuery = createFakeProductQueryDTO();
       jest.spyOn(productService, 'getAll').mockImplementationOnce(() => {
         throw new GetAllProductsException('');
       });

@@ -1,15 +1,15 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ProductsService } from '@products/services/products.service';
 import { Product } from '@products/entities/product.entity';
-import { Pagination } from '@main/shared/serializers/pagination.serializer';
-import { PaginationQueryDTO } from '@main/shared/dtos/pagination-query.dto';
+import { Pagination } from '@shared/serializers/pagination.serializer';
 import {
   ApiExtraModels,
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiPagination } from '@main/shared/decorators/api-pagination.decorator';
+import { ApiPagination } from '@shared/decorators/api-pagination.decorator';
+import { ProductQueryDTO } from '@products/dtos/product-query.dto';
 
 @ApiTags('Products')
 @ApiExtraModels(Pagination, Product)
@@ -21,9 +21,7 @@ export class ProductsController {
   @ApiPagination(Product)
   @ApiInternalServerErrorResponse({ description: 'Unexpected error' })
   @Get()
-  async getAll(
-    @Query() query: PaginationQueryDTO,
-  ): Promise<Pagination<Product>> {
+  async getAll(@Query() query: ProductQueryDTO): Promise<Pagination<Product>> {
     return this.service.getAll(query);
   }
 }

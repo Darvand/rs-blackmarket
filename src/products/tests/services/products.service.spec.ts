@@ -7,8 +7,8 @@ import { mockProductsRepository } from '@products/tests/mocks/products.repositor
 import { ProductsRepository } from '@products/repositories/products.repository';
 import {
   createFakePagination,
-  createFakePaginationQueryDTO,
-} from '@main/shared/tests/fakes/pagination.fake';
+  createFakeProductQueryDTO,
+} from '@shared/tests/fakes/pagination.fake';
 
 describe('ProductsService Unit Test', () => {
   let productsService: ProductsService;
@@ -35,7 +35,7 @@ describe('ProductsService Unit Test', () => {
 
   describe('getAll', () => {
     it('should return five product entities', async () => {
-      const fakeQuery = createFakePaginationQueryDTO(5);
+      const fakeQuery = createFakeProductQueryDTO(5);
       const response = await productsService.getAll(fakeQuery);
 
       expect(response).toBeDefined();
@@ -56,7 +56,7 @@ describe('ProductsService Unit Test', () => {
     });
 
     it('should return empty array if no products were found', async () => {
-      const fakeQuery = createFakePaginationQueryDTO();
+      const fakeQuery = createFakeProductQueryDTO();
       const fakePagination = createFakePagination([], fakeQuery);
       jest
         .spyOn(productsRepository, 'findAll')
@@ -74,7 +74,7 @@ describe('ProductsService Unit Test', () => {
     });
 
     it('should throw a GetAllProductsException if repository fails', async () => {
-      const fakeQuery = createFakePaginationQueryDTO();
+      const fakeQuery = createFakeProductQueryDTO();
       jest.spyOn(productsRepository, 'findAll').mockImplementationOnce(() => {
         throw new InternalServerErrorException();
       });

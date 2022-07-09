@@ -1,13 +1,16 @@
-import { PaginationQueryDTO } from '@main/shared/dtos/pagination-query.dto';
-import { Pagination } from '@main/shared/serializers/pagination.serializer';
+import { ProductQueryDTO } from '@products/dtos/product-query.dto';
+import { PaginationQueryDTO } from '@shared/dtos/pagination-query.dto';
+import { Pagination } from '@shared/serializers/pagination.serializer';
 
-export const createFakePaginationQueryDTO = (
+export const createFakeProductQueryDTO = (
   limit = 10,
   page = 1,
-): PaginationQueryDTO => {
+  byCategories?: string[],
+): ProductQueryDTO => {
   return {
     limit,
     page,
+    byCategories,
   };
 };
 

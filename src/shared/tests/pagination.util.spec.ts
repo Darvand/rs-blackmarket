@@ -1,6 +1,6 @@
 import { createFakeProductEntityArray } from '@main/products/tests/fakes/products.fake';
-import { PaginationUtils } from '../utils/pagination.util';
-import { createFakePaginationQueryDTO } from './fakes/pagination.fake';
+import { PaginationUtils } from '@shared/utils/pagination.util';
+import { createFakeProductQueryDTO } from '@shared/tests/fakes/pagination.fake';
 
 describe('PaginationUtils Unit Test', () => {
   describe('describePagination', () => {
@@ -18,7 +18,7 @@ describe('PaginationUtils Unit Test', () => {
 
   describe('createFindOptions', () => {
     it('should calculate take and skip values', () => {
-      const query = createFakePaginationQueryDTO(10, 4);
+      const query = createFakeProductQueryDTO(10, 4);
       const response = PaginationUtils.createFindOptions(query);
 
       expect(response).toBeDefined();
