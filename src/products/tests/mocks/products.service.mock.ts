@@ -1,6 +1,6 @@
-import { Product } from '@main/products/entities/product.entity';
-import { Pagination } from '@main/shared/serializers/pagination.serializer';
-import { createFakePagination } from '@main/shared/tests/fakes/pagination.fake';
+import { Product } from '@products/entities/product.entity';
+import { Pagination } from '@shared/serializers/pagination.serializer';
+import { createFakePagination } from '@shared/tests/fakes/pagination.fake';
 import { createFakeProductEntityArray } from '@products/tests/fakes/products.fake';
 
 export const mockProductsService = {

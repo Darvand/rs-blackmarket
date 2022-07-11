@@ -1,14 +1,14 @@
 import { Test } from '@nestjs/testing';
+import { InternalServerErrorException } from '@nestjs/common';
 
 import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
 import { ProductsService } from '@products/services/products.service';
-import { InternalServerErrorException } from '@nestjs/common';
 import { mockProductsRepository } from '@products/tests/mocks/products.repository.mock';
 import { ProductsRepository } from '@products/repositories/products.repository';
 import {
   createFakePagination,
   createFakePaginationQueryDTO,
-} from '@main/shared/tests/fakes/pagination.fake';
+} from '@shared/tests/fakes/pagination.fake';
 
 describe('ProductsService Unit Test', () => {
   let productsService: ProductsService;
