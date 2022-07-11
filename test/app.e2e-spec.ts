@@ -1,14 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '@main/app.module';
+import { AppController } from '@main/app.controller';
+import { AppService } from '@main/app.service';
+import { sharedTestingConfig } from '@shared/tests/utils/shared-testing.config';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: sharedTestingConfig,
+      controllers: [AppController],
+      providers: [AppService],
     }).compile();
 
     app = moduleFixture.createNestApplication();
