@@ -28,6 +28,7 @@ export class ProductsRepository extends Repository<Product> {
     const [data, count] = await queryBuilder
       .skip(findOptions.skip)
       .take(findOptions.take)
+      .orderBy('products.createdAt', query.sortedBy)
       .getManyAndCount();
     return PaginationUtils.createPagination(
       data,

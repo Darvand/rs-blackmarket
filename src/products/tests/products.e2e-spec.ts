@@ -3,12 +3,16 @@ import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { Product } from '@products/entities/product.entity';
 import { ProductModule } from '@products/product.module';
-import { createFakeProductEntityArray } from '@products/tests/fakes/products.fake';
+import {
+  createFakeProductEntity,
+  createFakeProductEntityArray,
+} from '@products/tests/fakes/products.fake';
 import { sharedTestingConfig } from '@shared/tests/utils/shared-testing.config';
 import { ProductsRepository } from '@products/repositories/products.repository';
 import { insertCategoriesWithRepository } from '@products/tests/utils/category.util';
 import { Category } from '@products/entities/category.entity';
 import { Pagination } from '@shared/serializers/pagination.serializer';
+import { SORTED_BY } from '@shared/enums/pagination.enum';
 
 describe('Products', () => {
   let app: INestApplication;
@@ -107,6 +111,28 @@ describe('Products', () => {
       ).length;
       expect(responseSecondCategoryLength).toBe(1);
       expect(response.body.results.length).toBe(2);
+    });
+
+    it('should sort by sortedBy field and get the recent product', async () => {
+      const oneHourAgo = new Date();
+      oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+      const firstProduct = {
+        ...createFakeProductEntity(),
+        createdBy: oneHourAgo,
+      };
+      const secondProduct = createFakeProductEntity();
+      await Promise.all(
+        insertCategories([firstProduct.category, secondProduct.category]),
+      );
+      await repository.insert([firstProduct, secondProduct]);
+
+      const response = await request(httpServer).get(
+        `/products?sortedBy=${SORTED_BY.DESC}`,
+      );
+      expect(response.statusCode).toEqual(HttpStatus.OK);
+      const body: Pagination<Product> = response.body;
+      expect(body.results.length).toBe(2);
+      expect(body.results[0].id).toBe(firstProduct.id);
     });
   });
 
