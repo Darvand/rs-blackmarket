@@ -1,10 +1,14 @@
 import { Test } from '@nestjs/testing';
+import { InternalServerErrorException } from '@nestjs/common';
 
 import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
 import { ProductsService } from '@products/services/products.service';
-import { InternalServerErrorException } from '@nestjs/common';
 import { mockProductsRepository } from '@products/tests/mocks/products.repository.mock';
 import { ProductsRepository } from '@products/repositories/products.repository';
+import {
+  createFakePagination,
+  createFakePaginationQueryDTO,
+} from '@shared/tests/fakes/pagination.fake';
 
 describe('ProductsService Unit Test', () => {
   let productsService: ProductsService;
@@ -31,12 +35,16 @@ describe('ProductsService Unit Test', () => {
 
   describe('getAll', () => {
     it('should return five product entities', async () => {
-      const response = await productsService.getAll();
+      const fakeQuery = createFakePaginationQueryDTO(5);
+      const response = await productsService.getAll(fakeQuery);
 
       expect(response).toBeDefined();
-      expect(response.length).toBe(5);
+      expect(response.actualPage).toBe(fakeQuery.page);
+      expect(response.totalAmount).toBe(fakeQuery.limit);
+      expect(response.totalPages).toBe(1);
+      expect(response.results.length).toBe(5);
 
-      response.forEach((product) => {
+      response.results.forEach((product) => {
         expect(product.name).toBeDefined();
         expect(product.description).toBeDefined();
         expect(product.price).toBeDefined();
@@ -44,30 +52,38 @@ describe('ProductsService Unit Test', () => {
         expect(product.image).toBeDefined();
       });
 
-      expect(productsRepository.findAll).toHaveBeenCalled();
+      expect(productsRepository.findAll).toHaveBeenCalledWith(fakeQuery);
     });
 
     it('should return empty array if no products were found', async () => {
-      jest.spyOn(productsRepository, 'findAll').mockResolvedValueOnce([]);
+      const fakeQuery = createFakePaginationQueryDTO();
+      const fakePagination = createFakePagination([], fakeQuery);
+      jest
+        .spyOn(productsRepository, 'findAll')
+        .mockResolvedValueOnce(fakePagination);
 
-      const response = await productsService.getAll();
+      const response = await productsService.getAll(fakeQuery);
 
       expect(response).toBeDefined();
-      expect(response.length).toBe(0);
+      expect(response.actualPage).toBe(fakePagination.actualPage);
+      expect(response.totalAmount).toBe(fakePagination.totalAmount);
+      expect(response.totalPages).toBe(fakePagination.totalPages);
+      expect(response.results.length).toBe(fakePagination.results.length);
 
-      expect(productsRepository.findAll).toHaveBeenCalled();
+      expect(productsRepository.findAll).toHaveBeenCalledWith(fakeQuery);
     });
 
     it('should throw a GetAllProductsException if repository fails', async () => {
+      const fakeQuery = createFakePaginationQueryDTO();
       jest.spyOn(productsRepository, 'findAll').mockImplementationOnce(() => {
         throw new InternalServerErrorException();
       });
 
-      await expect(productsService.getAll()).rejects.toThrowError(
+      await expect(productsService.getAll(fakeQuery)).rejects.toThrowError(
         GetAllProductsException,
       );
 
-      expect(productsRepository.findAll).toHaveBeenCalled();
+      expect(productsRepository.findAll).toHaveBeenCalledWith(fakeQuery);
     });
   });
 });

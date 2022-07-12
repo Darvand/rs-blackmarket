@@ -1,13 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ProductsService } from '@products/services/products.service';
 import { Product } from '@products/entities/product.entity';
+import { Pagination } from '@main/shared/serializers/pagination.serializer';
+import { PaginationQueryDTO } from '@main/shared/dtos/pagination-query.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(private service: ProductsService) {}
 
   @Get()
-  async getAll(): Promise<Product[]> {
-    return this.service.getAll();
+  async getAll(
+    @Query() query: PaginationQueryDTO,
+  ): Promise<Pagination<Product[]>> {
+    return this.service.getAll(query);
   }
 }

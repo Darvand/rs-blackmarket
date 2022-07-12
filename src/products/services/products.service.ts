@@ -1,3 +1,5 @@
+import { PaginationQueryDTO } from '@main/shared/dtos/pagination-query.dto';
+import { Pagination } from '@main/shared/serializers/pagination.serializer';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -14,11 +16,11 @@ export class ProductsService {
     private readonly productRepository: ProductsRepository,
   ) {}
 
-  async getAll(): Promise<Product[]> {
+  async getAll(query: PaginationQueryDTO): Promise<Pagination<Product[]>> {
     try {
       this.logger.log(`Attempting to find all products`);
-      const products = await this.productRepository.findAll();
-      this.logger.log(`Founded ${products.length} products`);
+      const products = await this.productRepository.findAll(query);
+      this.logger.log(`Founded ${products.results.length} products`);
       return products;
     } catch (error) {
       throw new GetAllProductsException(error);
