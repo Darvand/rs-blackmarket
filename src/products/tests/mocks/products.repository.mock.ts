@@ -1,4 +1,4 @@
-import { createFakePagination } from '@main/shared/tests/fakes/pagination.fake';
+import { createFakePagination } from '@shared/tests/fakes/pagination.fake';
 import { createFakeProductEntityArray } from '@products/tests/fakes/products.fake';
 
 export const mockProductsRepository = {

@@ -1,11 +1,12 @@
-import { ProductsController } from '@main/products/controllers/products.controller';
-import { GetAllProductsException } from '@main/products/exceptions/get-all-products.exception';
-import { ProductsService } from '@main/products/services/products.service';
+import { Test } from '@nestjs/testing';
+
+import { ProductsController } from '@products/controllers/products.controller';
+import { GetAllProductsException } from '@products/exceptions/get-all-products.exception';
+import { ProductsService } from '@products/services/products.service';
 import {
   createFakePagination,
   createFakePaginationQueryDTO,
-} from '@main/shared/tests/fakes/pagination.fake';
-import { Test } from '@nestjs/testing';
+} from '@shared/tests/fakes/pagination.fake';
 import { mockProductsService } from '@products/tests/mocks/products.service.mock';
 
 describe('ProductsController Unit Tests', () => {
