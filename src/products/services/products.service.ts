@@ -16,7 +16,7 @@ export class ProductsService {
     private readonly productRepository: ProductsRepository,
   ) {}
 
-  async getAll(query: PaginationQueryDTO): Promise<Pagination<Product[]>> {
+  async getAll(query: PaginationQueryDTO): Promise<Pagination<Product>> {
     try {
       this.logger.log(`Attempting to find all products`);
       const products = await this.productRepository.findAll(query);

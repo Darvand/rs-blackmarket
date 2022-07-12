@@ -10,7 +10,7 @@ import { inspect } from 'util';
 export class ProductsRepository extends Repository<Product> {
   private readonly logger = new Logger(ProductsRepository.name);
 
-  async findAll(query: PaginationQueryDTO): Promise<Pagination<Product[]>> {
+  async findAll(query: PaginationQueryDTO): Promise<Pagination<Product>> {
     this.logger.log(
       `Attempting to find and count using query: ${inspect(query)}`,
     );

@@ -6,7 +6,7 @@ import { createFakeProductEntityArray } from '@products/tests/fakes/products.fak
 export const mockProductsService = {
   getAll: jest
     .fn()
-    .mockImplementation(async (): Promise<Pagination<Product[]>> => {
+    .mockImplementation(async (): Promise<Pagination<Product>> => {
       const products = createFakeProductEntityArray();
       return createFakePagination(products, {
         limit: products.length,
